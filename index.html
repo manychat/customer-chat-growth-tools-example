@@ -2,11 +2,169 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Checkbox example</title>
+    <title>Customer Chat example</title>
     <script src="//widget.manychat.com/2069710813264446.js" async="async"></script>
+    <style>
+        body{
+            font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+        }
+        .btn{
+            font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+            font-size: 16px;
+            box-sizing: border-box;
+            padding: 15px 20px;
+            cursor: pointer;
+            text-align: center;
+            border: none;
+            border-radius: 4px;
+
+            color: #111;
+            background: #ffb932;
+        }
+        .btn:hover {
+            opacity: .8;
+        }
+        code{
+            background-color: #333;
+            box-shadow: 2px 3px 20px rgba(0,0,0,.1);
+            color: wheat;
+            padding: 16px;
+            display: inline-block;
+            border-radius: 4px;
+        }
+        input[type='text']{
+            padding: 10px;
+            min-width: 300px;
+        }
+        h3{
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
 </head>
 <body>
+    <div>
+        <h2>Customer Chat Widget Methods</h2>
+        <h3>Open widget</h3>
+        <div>
+            <input type="checkbox" id="shouldOpenDialogInput" checked />
+            <label for="shouldOpenDialogInput">shouldOpenDialog</label>
+        </div>
+        <code id="openCode">MC.getWidget(3524447).open(true)</code>
+        <button class="btn" id="openExecute">execute</button>
 
+        <h3>Close entire widget</h3>
+        <code id="closeCode">MC.getWidget(3524447).close()</code>
+        <button class="btn" id="closeExecute">execute</button>
 
+        <h3>Open widget dialog</h3>
+        <code id="openDialogCode">MC.getWidget(3524447).openDialog()</code>
+        <button class="btn" id="openDialogExecute">execute</button>
+
+        <h3>Close widget dialog</h3>
+        <code id="closeDialogCode">MC.getWidget(3524447).closeDialog()</code>
+        <button class="btn" id="closeDialogExecute">execute</button>
+
+        <h3>Set the greeting text for logged in user</h3>
+        <div>
+            <input title="loggedInGreeting" type="text" id="loggedInGreetingInput" value="Hi! How can we help you?" />
+        </div>
+        <code id="loggedInGreetingCode">MC.getWidget(3524447).setLoggedInGreeting("Hi! How can we help you?")</code>
+        <button class="btn" id="loggedInGreetingExecute">execute</button>
+
+        <h3>Set the greeting text for logged out user</h3>
+        <div>
+            <input title="loggedOutGreeting" type="text" id="loggedOutGreetingInput" value="Hi! How can we help you?" />
+        </div>
+        <code id="loggedOutGreetingCode">MC.getWidget(3524447).setLoggedOutGreeting("Hi! How can we help you?")</code>
+        <button class="btn" id="loggedOutGreetingExecute">execute</button>
+
+        <h3>Set the ref payload for the widget</h3>
+        <div>
+            <input title="refPayload" type="text" id="refPayloadInput" value="payload" />
+        </div>
+        <code id="refPayloadCode">MC.getWidget(3524447).setPayload("payload")</code>
+        <button class="btn" id="refPayloadExecute">execute</button>
+    </div>
+
+    <script>
+      // open
+      var shouldOpenDialog = true
+      var shouldOpenDialogInput = document.getElementById('shouldOpenDialogInput');
+      var openCode = document.getElementById('openCode');
+      var openExecute = document.getElementById('openExecute');
+
+      shouldOpenDialogInput.oninput = function(event) {
+        shouldOpenDialog = event.target.checked;
+        openCode.innerHTML = 'MC.getWidget(3524447).open(' + JSON.stringify(shouldOpenDialog) + ')';
+      }
+
+      openExecute.onclick = function() {
+        MC.getWidget(3524447).open(shouldOpenDialog);
+      }
+
+      // close
+      var closeExecute = document.getElementById('closeExecute');
+      openExecute.onclick = function() {
+        MC.getWidget(3524447).close();
+      }
+
+      // openDialog
+      var openDialogExecute = document.getElementById('openDialogExecute');
+      openDialogExecute.onclick = function() {
+        MC.getWidget(3524447).openDialog();
+      }
+
+      // closeDialog
+      var closeDialogExecute = document.getElementById('closeDialogExecute');
+      closeDialogExecute.onclick = function() {
+        MC.getWidget(3524447).closeDialog();
+      }
+
+      // loggedInGreeting
+      var loggedInGreeting = 'Hi! How can we help you?'
+      var loggedInGreetingInput = document.getElementById('loggedInGreetingInput');
+      var loggedInGreetingCode = document.getElementById('loggedInGreetingCode');
+      var loggedInGreetingExecute = document.getElementById('loggedInGreetingExecute');
+
+      loggedInGreetingInput.oninput = function(event) {
+        loggedInGreeting = event.target.value;
+        loggedInGreetingCode.innerHTML = 'MC.getWidget(3524447).setLoggedInGreeting("' + loggedInGreeting + '")';
+      }
+
+      loggedInGreetingExecute.onclick = function() {
+        MC.getWidget(3524447).setLoggedInGreeting(loggedInGreeting);
+      }
+
+      // loggedOutGreeting
+      var loggedOutGreeting = 'Hi! How can we help you?'
+      var loggedOutGreetingInput = document.getElementById('loggedOutGreetingInput');
+      var loggedOutGreetingCode = document.getElementById('loggedOutGreetingCode');
+      var loggedOutGreetingExecute = document.getElementById('loggedOutGreetingExecute');
+
+      loggedOutGreetingInput.oninput = function(event) {
+        loggedOutGreeting = event.target.value;
+        loggedOutGreetingCode.innerHTML = 'MC.getWidget(3524447).setLoggedInGreeting("' + loggedOutGreeting + '")';
+      }
+
+      loggedOutGreetingExecute.onclick = function() {
+        MC.getWidget(3524447).setLoggedOutGreeting(loggedOutGreeting);
+      }
+
+      // refPayload
+      var refPayload = 'payload'
+      var refPayloadInput = document.getElementById('refPayloadInput');
+      var refPayloadCode = document.getElementById('refPayloadCode');
+      var refPayloadExecute = document.getElementById('refPayloadExecute');
+
+      refPayloadInput.oninput = function(event) {
+        refPayload = event.target.value;
+        refPayloadCode.innerHTML = 'MC.getWidget(3524447).setPayload("' + refPayload + '")';
+      }
+
+      refPayloadExecute.onclick = function() {
+        MC.getWidget(3524447).setPayload(refPayload);
+      }
+    </script>
 </body>
 </html>
